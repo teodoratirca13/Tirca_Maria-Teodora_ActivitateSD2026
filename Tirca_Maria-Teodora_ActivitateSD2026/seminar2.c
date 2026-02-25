@@ -117,10 +117,11 @@ int main() {
 	struct Telefon* telScumpe;
 	int dim = 0;
 	copiazaTelefoaneScumpe(telefoane, nrTelefoane, 3000, &telScumpe, &dim);
-	printf("Telefonae scumpe:\n\n");
+	printf("Telefoane scumpe:\n\n");
 	afisareVector(telScumpe, dim);
 
 	dezalocare(&telefoane, &nrTelefoane);
 	dezalocare(&rezultat,&nrTelefoaneCopiate);
 
+	return 0;
 }
