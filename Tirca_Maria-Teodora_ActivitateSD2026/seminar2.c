@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<malloc.h>
 
+
 struct Telefon {
 	int id;
 	int RAM;
@@ -25,7 +26,7 @@ void afisare(struct Telefon t) {
 	printf("Producator: %s\n", t.producator);
 	printf("Pret: %5.2f\n", t.pret);
 	printf("Serie: %c\n", t.serie);
-	printf("\n", t.id);
+	printf("\n");
 }
 
 void afisareVector(struct Telefon* vector, int nrElemente) {
@@ -84,13 +85,21 @@ void copiazaTelefoaneScumpe(struct Telefon* vector, char nrElemente, float pretM
 	}
 }
 
-struct Telefon getPrimulElementConditionat(struct Telefon* vector, int nrElemente, const char* conditie) {
+struct Telefon getPrimulElementConditionat(struct Telefon* vector, int nrElemente, const char* producator) {
 	//trebuie cautat elementul care indeplineste o conditie
 	//dupa atributul de tip char*. Acesta este returnat.
-	struct Telefon s;
-	s.id = 1;
+	struct Telefon t;
+	t.producator = NULL;
+    for (int i = 0; i < nrElemente; i++)
+	{
+		if (strcmp(vector[i].producator, producator) == 0)
+		{
+			t = copiazaTelefon(vector[i]);
+			return t;
+		}
+	}
 
-	return s;
+	return t;
 }
 	
 
@@ -103,7 +112,7 @@ int main() {
 	struct Telefon* telefoane;
 	int nrTelefoane=3;
 	telefoane = (struct Telefon*)malloc(sizeof(struct Telefon) * nrTelefoane);
-	telefoane[0] = t;
+	telefoane[0] = copiazaTelefon(t);
 	telefoane[1] = initializare(2, 200, "Huawei", 3500.0, 'S');
 	telefoane[2] = initializare(3, 250, "Iphone", 4000.0, 'C');
 	afisareVector(telefoane, nrTelefoane);
@@ -120,8 +129,22 @@ int main() {
 	printf("Telefoane scumpe:\n\n");
 	afisareVector(telScumpe, dim);
 
+	struct Telefon cautat = getPrimulElementConditionat(telefoane, nrTelefoane, "Huawei");
+	if (cautat.producator != NULL)
+	{
+		printf("Primul telefon cu producator Huawei:\n");
+		afisare(cautat);
+		free(cautat.producator);
+		cautat.producator = NULL;
+	}
+	else
+	{
+		printf("Nu exista telefon cu acest producator.\n");
+	}
+
 	dezalocare(&telefoane, &nrTelefoane);
 	dezalocare(&rezultat,&nrTelefoaneCopiate);
+	dezalocare(&telScumpe, &dim);
 
 	return 0;
 }
