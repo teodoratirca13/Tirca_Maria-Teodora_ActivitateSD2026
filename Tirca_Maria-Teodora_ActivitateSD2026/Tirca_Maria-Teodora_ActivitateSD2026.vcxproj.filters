@@ -18,5 +18,14 @@
     <ClCompile Include="Seminar1.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="seminar1_suplimentar.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="seminar2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="suplimentar2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

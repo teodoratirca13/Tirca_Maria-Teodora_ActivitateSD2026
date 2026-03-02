@@ -10,7 +10,7 @@ struct Film
 	char categorie;
 };
 
-struct Film initializare(int id, int durata, char* titlu, float rating,char categorie)
+struct Film initializare(int id, int durata,const char* titlu, float rating,char categorie)
 {
 	struct Film f;
 	f.id = id;
@@ -121,6 +121,36 @@ void copiazaFilmeDeDurataMinima(struct Film* filme, int nrFilme, int pragMinute,
 		}
 	}
 }
+
+void sortareDupaRating(struct Film** filme, int nrFilme)
+{
+	for (int i = 0; i < nrFilme -1; i++)
+	{
+		for (int j = i + 1; j < nrFilme; j++)
+		{
+			if ((*filme)[i].rating > (*filme)[j].rating)
+			{
+				struct Film aux =(*filme)[i];
+				(*filme)[i] = (*filme)[j];
+				(*filme)[j] = aux;
+			}
+		}
+	}
+}
+struct Film cautareFilmDupaTitlu(struct Film* filme, int nrFilme, const char* titluCautat)
+{
+	struct Film rez;
+	rez.titlu = NULL;
+	for (int i = 0; i < nrFilme; i++)
+	{
+		if (strcmp(filme[i].titlu, titluCautat) == 0)
+		{
+			rez = copiazaFilm(filme[i]);
+			return rez;
+		}
+	}
+	return rez; //nu a fost gasit
+}
 int main()
 {
 	int nrFilme = 3;
@@ -150,13 +180,34 @@ int main()
 	free(filmDeAdaugat.titlu);
 	filmDeAdaugat.titlu = NULL;
 
-	float pragMinute = 120;
+	int pragMinute = 120;
 	struct Film* vector;
 	int dimensiune = 0;
 	copiazaFilmeDeDurataMinima(filme, nrFilme, pragMinute, &vector, &dimensiune);
 
 	printf("\nFilme de durata minima:\n");
 	afisareVectorFilme(vector, dimensiune);
+
+	printf("\nFilme sortate dupa rating :\n");
+	sortareDupaRating(&filme, nrFilme);
+	afisareVectorFilme(filme, nrFilme);
+
+
+	printf("\nCautare film dupa titlu :\n");
+	struct Film filmGasit = cautareFilmDupaTitlu(filme, nrFilme, "Avatar");
+	if (filmGasit.titlu != NULL)
+	{
+		printf("Film gasit:\n");
+		afisare(filmGasit);
+
+		free(filmGasit.titlu);
+		filmGasit.titlu = NULL;
+	}
+	else
+	{
+		printf("FIlmul nu exista!");
+	}
+
 
 	dezalocare(&filme, &nrFilme);
 	dezalocare(&rez, &dim);
