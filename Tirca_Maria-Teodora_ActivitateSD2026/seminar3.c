@@ -95,7 +95,20 @@ Masina* citireVectorMasiniFisier(const char* numeFisier, int* nrMasiniCitite) {
 }
 
 void dezalocareVectorMasini(Masina** vector, int* nrMasini) {
-	//este dezalocat intreg vectorul de masini
+	if (vector == NULL || *vector==NULL|| nrMasini==0|| *nrMasini == 0)
+	{
+		return;
+	}
+	for (int i = 0; i < *nrMasini; i++)
+	{
+		free((*vector)[i].model);
+		(*vector)[i].model = NULL;
+		free((*vector)[i].numeSofer);
+		(*vector)[i].numeSofer = NULL;
+	}
+	free(*vector);
+	*vector = NULL;
+	*nrMasini = 0;
 }
 
 int main() {
@@ -103,5 +116,6 @@ int main() {
 	Masina* masini=citireVectorMasiniFisier("masini.txt",&nrMasini);
 
 	afisareVectorMasini(masini,nrMasini);
+	dezalocareVectorMasini(&masini, &nrMasini);
 	return 0;
 }
