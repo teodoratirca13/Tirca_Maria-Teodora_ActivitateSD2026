@@ -1,0 +1,4 @@
+1,1,9.45,Popescu Andrei,Informatica Economica,E
+2,2,8.10,Olaru Maria,Cibernetica,B
+3,3,7.75,Radu Mihai,Statistica,F
+4,1,9.20,Popa Ioana,Informatica Economica,C
