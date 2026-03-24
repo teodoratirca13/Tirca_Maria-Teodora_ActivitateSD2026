@@ -182,6 +182,49 @@ char* getNumeStudentCuMediaMaxima(ListaDubla lista)
 	}
 	return NULL;
 }
+void stergeStudentDupaID(ListaDubla* lista, int id)
+{
+	if (lista->primul == NULL)
+	{
+		return;
+	}
+	Nod* p = lista->primul;
+	while (p && p->info.id != id)
+	{
+		p = p->next;
+	}
+	if (p == NULL) //daca am iesit din lista
+		return;
+
+	if (p->prev == NULL) //e primul nod
+	{
+		lista->primul = p->next;
+		if (p->next != NULL)
+		{
+			p->next->prev = NULL;
+		}
+	}
+	else
+	{
+		p->prev->next = p->next;
+	}
+
+	if (p->next == NULL) //este ultimul nod
+	{
+		lista->ultimul = p->prev;
+	}
+	else
+	{
+		p->next->prev = p->prev;
+	}
+
+	//stergera
+	if (p->info.specializare != NULL)
+		free(p->info.specializare);
+	if (p->info.nume != NULL)
+		free(p->info.nume);
+	free(p);
+}
 int main()
 {
 	ListaDubla lista = citireLDStudentiDinFisier("studenti.txt");
@@ -196,9 +239,12 @@ int main()
 	char* nume = getNumeStudentCuMediaMaxima(lista);
 	if (nume != NULL)
 	{
-		printf("\nStudentul cu media cea mai mare: %s", nume);
+		printf("\nStudentul cu media cea mai mare: %s\n\n", nume);
 		free(nume);
 	}
+	stergeStudentDupaID(&lista, 2);
+	printf("lista dupa stergerea studentului cu id-ul 2:\n");
+	afisareListaStudenti(lista);
 
 	dezalocareLDStudenti(&lista);
 	return 0;
