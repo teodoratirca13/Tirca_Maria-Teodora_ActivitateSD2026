@@ -132,8 +132,8 @@ HashTable citireMasiniDinFisier(const char* numeFisier) {
 			Masina masina = citireMasinaDinFisier(file);
 			inserareMasinaInTabela(hashTable, masina);
 		}
+		fclose(file);
 	}
-	fclose(file);
 	return hashTable;
 }
 
@@ -141,9 +141,12 @@ void afisareTabelaDeMasini(HashTable ht) {
 	//sunt afisate toate masinile cu evidentierea clusterelor realizate
 	for (int i = 0; i<ht.dim; i++)
 	{
-		printf("Clusterul %d\n", i + 1);
-		afisareListaMasini(ht.vector[i]);
-		printf("\n---------------\n");
+		if (ht.vector[i] != NULL)
+		{
+			printf("Clusterul %d\n", i + 1);
+			afisareListaMasini(ht.vector[i]);
+			printf("\n---------------\n");
+		}
 	}
 }
 
@@ -155,7 +158,34 @@ float* calculeazaPreturiMediiPerClustere(HashTable ht, int* nrClustere) {
 	//calculeaza pretul mediu al masinilor din fiecare cluster.
 	//trebuie sa returnam un vector cu valorile medii per cluster.
 	//lungimea vectorului este data de numarul de clustere care contin masini
-	return NULL;
+	*nrClustere = 0;
+
+	for (int i = 0; i < ht.dim; i++)
+	{
+		if (ht.vector[i] != NULL)
+		{
+			(*nrClustere)++;
+		}
+	}
+	float* preturi_medii = malloc(sizeof(float) * (*nrClustere));
+	int k = 0;
+	for (int i = 0; i < ht.dim; i++)
+	{
+		if (ht.vector[i] != NULL)
+		{
+			float suma = 0;
+			int nrMasini = 0;
+			Nod* aux = ht.vector[i];
+			while (aux)
+			{
+				suma += aux->info.pret;
+				nrMasini++;
+				aux = aux->next;
+			}
+			preturi_medii[k++] = suma / nrMasini;
+		}
+	}
+	return preturi_medii;
 }
 
 Masina getMasinaDupaCheie(HashTable ht, int id) {
@@ -197,6 +227,11 @@ int main() {
 	else {
 		printf("\nNu exista masina cu id-ul cautat\n");
 	}
-
+	int nrClustere;
+	float* vectorPreturi = calculeazaPreturiMediiPerClustere(hash, &nrClustere);
+	for (int i = 0; i < nrClustere; i++)
+	{
+		printf("Pentru clusterul cu index %d, pretul mediu este:%.2f\n", i, vectorPreturi[i]);
+	}
 	return 0;
 }
