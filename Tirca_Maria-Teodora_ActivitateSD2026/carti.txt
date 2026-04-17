@@ -1,0 +1,4 @@
+1,320,45.5,Enigma Otiliei,George Calinescu,A
+2,280,39.9,Ion,Liviu Rebreanu,B
+3,500,75.0,Morometii,Marin Preda,A
+4,150,29.5,Baltagul,Mihail Sadoveanu,C
