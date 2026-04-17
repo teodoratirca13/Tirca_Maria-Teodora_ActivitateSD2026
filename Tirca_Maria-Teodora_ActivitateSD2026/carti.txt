@@ -2,3 +2,6 @@
 2,280,39.9,Ion,Liviu Rebreanu,B
 3,500,75.0,Morometii,Marin Preda,A
 4,150,29.5,Baltagul,Mihail Sadoveanu,C
+5,420,60.0,Crima si pedeapsa,Dostoievski,D
+6,310,45.5,Maitreyi,Mircea Eliade,B
+7,280,45.5,Padurea spanzuratilor,Liviu Rebreanu,A
