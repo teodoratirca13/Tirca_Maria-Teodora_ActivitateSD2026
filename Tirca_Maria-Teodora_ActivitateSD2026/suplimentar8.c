@@ -159,12 +159,159 @@ void dezalocare(Nod** cap)
 		free(p);
 	}
 }
+float pretMediu(Nod* cap)
+{
+	float suma = 0;
+	int contor = 0;
+
+	while (cap != NULL)
+	{
+		suma += cap->info.pret;
+		contor++;
+		cap = cap->next;
+	}
+
+	if (contor > 0)
+	{
+		return suma / contor;
+	}
+	return 0;
+}
+
+Carte copiazaCarte(Carte c)
+{
+	Carte rez;
+	rez = c;
+
+	rez.titlu = (char*)malloc(strlen(c.titlu) + 1);
+	strcpy(rez.titlu, c.titlu);
+
+	rez.autor = (char*)malloc(strlen(c.autor) + 1);
+	strcpy(rez.autor, c.autor);
+
+	return rez;
+}
+
+Nod* copiazaCartiScumpe(Nod* cap, float prag)
+{
+	Nod* rezultat = NULL;
+
+	while (cap != NULL)
+	{
+		if (cap->info.pret > prag)
+		{
+			adaugaLaInceput(&rezultat, copiazaCarte(cap->info));
+		}
+		cap = cap->next;
+	}
+
+	return rezultat;
+}
+
+void stergeCartiCategorie(Nod** cap, const char categorie)
+{
+	while ((*cap) != NULL && (*cap)->info.categorie == categorie)
+	{
+		Nod* p = *cap;
+		*cap = p->next;
+
+		if (p->info.titlu != NULL)
+		{
+			free(p->info.titlu);
+		}
+		if (p->info.autor != NULL)
+		{
+			free(p->info.autor);
+		}
+
+		free(p);
+	}
+
+	if ((*cap) != NULL)
+	{
+		Nod* p = *cap;
+
+		while (p != NULL)
+		{
+			while (p->next != NULL && p->next->info.categorie != categorie)
+			{
+				p = p->next;
+			}
+
+			if (p->next != NULL)
+			{
+				Nod* aux = p->next;
+				p->next = aux->next;
+
+				if (aux->info.titlu != NULL)
+				{
+					free(aux->info.titlu);
+				}
+				if (aux->info.autor != NULL)
+				{
+					free(aux->info.autor);
+				}
+
+				free(aux);
+			}
+			else
+			{
+				p = p->next;
+			}
+		}
+	}
+}
+
+void sortareListaDupaPret(Nod* cap)
+{
+	if (cap == NULL)
+	{
+		return;
+	}
+
+	for (Nod* i = cap; i->next != NULL; i = i->next)
+	{
+		for (Nod* j = i->next; j != NULL; j = j->next)
+		{
+			if (i->info.pret > j->info.pret)
+			{
+				Carte aux = i->info;
+				i->info = j->info;
+				j->info = aux;
+			}
+			else if (i->info.pret == j->info.pret)
+			{
+				if (strcmp(i->info.autor, j->info.autor) > 0)
+				{
+					Carte aux = i->info;
+					i->info = j->info;
+					j->info = aux;
+				}
+			}
+		}
+	}
+}
 int main()
 {
 	Nod* cap = citireListaDinFisier("carti.txt");
 
 	afisareLista(cap);
 
+	float medie = pretMediu(cap);
+	printf("Pretul mediu al cartilor este: %.2f\n\n", medie);
+
+	Nod* cartiScumpe = copiazaCartiScumpe(cap, 50);
+	// afisareLista(cartiScumpe);
+
+	/*printf("Dupa stergere carti categoria A:\n");
+	stergeCartiCategorie(&cap, 'A');
+	afisareLista(cap); */
+
+	printf("Dupa sortare:\n");
+	sortareListaDupaPret(cap);
+	afisareLista(cap);
+
+	dezalocare(&cartiScumpe);
 	dezalocare(&cap);
 
 	return 0;
