@@ -294,6 +294,48 @@ Carte getCarteDupaTitlu(HashTable ht, const char* titluCautat)
 	}
 	return c;
 }
+void stergereCarteDinLista(Nod** cap, const char* titlu)
+{
+	if (*cap == NULL)
+		return;
+
+	//daca e primul nod
+	if (strcmp((*cap)->info.titlu, titlu) == 0)
+	{
+		Nod* p = *cap;
+		*cap = p->next;
+		if (p->info.autor != NULL)
+			free(p->info.autor);
+		if (p->info.titlu != NULL)
+			free(p->info.titlu);
+		free(p);
+
+		return;
+	}
+	Nod* p = *cap;
+	while (p->next != NULL && strcmp(p->next->info.titlu, titlu) != 0)
+	{
+		p = p->next;
+	}
+	//suntem inainte de nodul care trb sters
+	if (p->next)
+	{
+		Nod* temp = p->next;
+		p->next = temp->next;
+
+		free(temp->info.titlu);
+		free(temp->info.autor);
+		free(temp);
+	}
+}
+void stergereCarteDinTabela(HashTable ht, const char* titlu)
+{
+	int poz = calculeazaHash(titlu, ht.dim);
+	if (poz >= 0 && poz < ht.dim)
+	{
+		stergereCarteDinLista(&ht.vector[poz], titlu);
+	}
+}
 int main()
 {
 	HashTable ht = citireCartiDinFisier("carti.txt", 3);
@@ -335,6 +377,10 @@ int main()
 	{
 		printf("\nNu exista aceasta carte");
 	}
+
+	stergereCarteDinTabela(ht, "Crima si pedeapsa");
+	printf("\nDupa stergerea cartii 'Crima si pedeapsa':\n");
+	afisareTabelaDeCarti(ht);
 
 	dezalocareTabelaDeDispersie(&ht);
 	return 0;
