@@ -1,0 +1,8 @@
+1,120,8.7,Inception,Christopher Nolan,A
+2,95,7.9,Titanic,James Cameron,B
+3,140,9.1,Interstellar,Christopher Nolan,A
+4,110,8.3,Avatar,James Cameron,C
+5,130,8.8,The Dark Knight,Christopher Nolan,B
+6,100,7.5,Joker,Todd Phillips,A
+7,150,9.0,The Godfather,Francis Ford Coppola,C
+8,125,8.1,Gladiator,Ridley Scott,B
