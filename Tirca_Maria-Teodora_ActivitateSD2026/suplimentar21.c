@@ -89,7 +89,7 @@ int verificareEchilibru(NodArbore* radacina)
 	return stanga - dreapta;
 }
 
-void inserareMasinaInArboreEchilibrat(NodArbore** radacina, Carte carte)
+void inserareCarteInArboreEchilibrat(NodArbore** radacina, Carte carte)
 {
 	//arbore gol
 	if (*radacina == NULL)
@@ -104,38 +104,30 @@ void inserareMasinaInArboreEchilibrat(NodArbore** radacina, Carte carte)
 	{
 		if (carte.id > (*radacina)->info.id)  //punem in dreapta
 		{
-			inserareMasinaInArboreEchilibrat(&(*radacina)->dreapta, carte);
+			inserareCarteInArboreEchilibrat(&(*radacina)->dreapta, carte);
 		}
 		else
 		{
-			inserareMasinaInArboreEchilibrat(&(*radacina)->stanga, carte);
+			inserareCarteInArboreEchilibrat(&(*radacina)->stanga, carte);
 		}
 
 		//verficare de echilibru
 		int gradDeEchilibru = verificareEchilibru(*radacina);
 		if (gradDeEchilibru == -2)  //dezechilibru pe partea dreapta
 		{
-			if (verificareEchilibru((*radacina)->dreapta) == -1)  // dreapta-dreapta
+			if (verificareEchilibru((*radacina)->dreapta) == 1)  //dreapta-stanga
 			{
-				rotireStanga(radacina);
-			}
-			if (verificareEchilibru((*radacina)->dreapta) == 1)    //dreapta-stanga
-			{
-				rotireDreapta(radacina);
-				rotireStanga(radacina);
-			}
+				rotireDreapta(&(*radacina)->dreapta);
+		    }
+			rotireStanga(radacina);
 		}
 		if (gradDeEchilibru == 2)  //dezechilibru pe partea stanga
 		{
-			if (verificareEchilibru((*radacina)->stanga) == 1)  //stanga-stanga
+			if (verificareEchilibru((*radacina)->stanga) == -1)  //stanga-dreapta
 			{
-				rotireDreapta(radacina);
+				rotireStanga(&(*radacina)->stanga);
 			}
-			if (verificareEchilibru((*radacina)->stanga) == -1)    //stanga-dreapta
-			{
-				rotireStanga(radacina);
-				rotireDreapta(radacina);
-			}
+			rotireDreapta(radacina);
 		}
 	}
 }
@@ -148,7 +140,7 @@ NodArbore* citireAboreDeCartiDinFisier(const char* numeFisier)
 		while (!feof(file))
 		{
 			Carte carte = citireCarteDinFisier(file);
-			inserareMasinaInArboreEchilibrat(&radacina, carte);
+			inserareCarteInArboreEchilibrat(&radacina, carte);
 		}
 		fclose(file);
 	}
@@ -241,7 +233,7 @@ float calculeazaPretulCartilorUnuiAutor(NodArbore* radacina, const char* autor)
 	}
 	suma += calculeazaPretulCartilorUnuiAutor(radacina->stanga, autor);
 	suma += calculeazaPretulCartilorUnuiAutor(radacina->dreapta, autor);
-
+	return suma;
 }
 int main()
 {
