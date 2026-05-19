@@ -1,0 +1,10 @@
+1,25,4500.5,Popescu Ion,Programator,I
+2,31,5200.0,Ionescu Maria,Analist,F
+3,28,4800.0,Georgescu Andrei,Tester,T
+4,40,7500.0,Dumitrescu Elena,Manager,M
+5,22,3900.0,Stan Mihai,Junior Developer,I
+6,35,6100.0,Marinescu Andreea,Contabil,F
+7,29,5600.5,Vasilescu Radu,DevOps,I
+8,45,8200.0,Petrescu Laura,Director,D
+9,26,4300.0,Ilie Alexandru,HR Specialist,H
+10,33,5900.0,Enache Cristina,Data Analyst,A
