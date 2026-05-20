@@ -1,0 +1,10 @@
+1,1,62000.30,Strada Lalelelor 14,Militari,C
+2,2,85000.00,Bulevardul Unirii 25,Unirii,B
+3,3,110000.00,Bulevardul Tineretului 5,Tineretului,B
+4,3,120000.50,Strada Victoriei 10,Centru,A
+5,2,97000.90,Strada Dorobanti 22,Dorobanti,A
+6,4,180000.75,Strada Primaverii 8,Primaverii,A
+7,2,78000.00,Strada Iuliu Maniu 45,Militari,B
+8,3,135000.25,Strada Barbu Vacarescu 12,Floreasca,A
+9,1,70000.00,Bulevardul Timisoara 33,Drumul Taberei,C
+10,4,210000.90,Strada Herastrau 18,Herastrau,A
