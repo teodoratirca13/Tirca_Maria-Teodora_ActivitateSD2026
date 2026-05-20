@@ -1,0 +1,7 @@
+4,64,1500.30,Redmi Note 12,Xiaomi,B
+2,256,4200.00,Galaxy S22,Samsung,P
+6,128,2100.00,Moto Edge 30,Motorola,B
+1,128,3500.50,iPhone 13,Apple,P
+5,256,3900.90,OnePlus 10,OnePlus,M
+3,128,2800.75,Pixel 7,Google,M
+7,512,6200.99,iPhone 15 Pro,Apple,P
